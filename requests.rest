@@ -1,0 +1,27 @@
+POST http://localhost:4000/login
+Content-Type: application/json
+
+{
+    "username" : "Maaya"
+}
+
+###
+GET http://localhost:3000/posts
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWFheWEiLCJpYXQiOjE1ODY1MzgxMzAsImV4cCI6MTU4NjUzODE2MH0.4l5lJ7VEKRF9S1eiHPYX5OjepnYGYspfipuz4XED2j0
+
+
+###
+POST http://localhost:4000/refreshToken
+Content-Type: application/json
+
+{
+    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWFheWEiLCJpYXQiOjE1ODY1MzgxMzB9.07EfAHlRG4VwQIJAVUyRAvBzFWNdaT1Z-L4r-djVcv4"
+}
+
+###
+DELETE http://localhost:3000/logout
+Content-Type: application/json
+
+{
+    "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWFheWEiLCJpYXQiOjE1ODY1MzgxMzB9.07EfAHlRG4VwQIJAVUyRAvBzFWNdaT1Z-L4r-djVcv4"
+}
