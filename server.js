@@ -3,30 +3,56 @@ const jwt = require('jsonwebtoken');
 const app = express();
 const log = console.log;
 require('dotenv').config();
-
+const bcrypt = require('bcrypt');
 
 app.use(express.json());
 
-const posts = [
+let users = [];
+let movies = [
     {
-        username: 'Raghu', 
-        age:35
+        title: 'Inception',
+        leadRole: 'Leonardo DiCaprio',
+        director: 'Christopher Nolan',
+        rating: 4.8
     },
     {
-        username: 'Maaya', 
-        age:30
+        title: 'Marriage Story',
+        leadRole: 'Adam Driver',
+        director: 'Noah Baumbach',
+        rating: 4.4
+    },
+    {
+        title: 'Parasite',
+        leadRole: 'Kang-ho Song',
+        director: 'Bong Joon-ho',
+        rating: 4.6
     }
-]
+];
 
-app.get('/posts', authenticate, (req, res) => {
-    res.json(posts.filter(post => post.username === req.user.name));
+app.get('/movies', authenticate, (req, res) => {
+    res.json(movies);
 });
+
+app.get('/users', (req, res) => {
+    res.json(users);
+});
+
+app.post('/register', (req, res) => {
+    const hashedPassword = bcrypt.hashSync(req.body.password, 10);
+    const user = {
+        username: req.body.username,
+        password: hashedPassword
+    };
+    users.push(user);
+    return res.sendStatus(204);
+});
+
 
 function authenticate(req, res, next){
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
     if( token == null)
-        return res.sendStatus(401)
+        return res.sendStatus(401);
 
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
         if(err) return res.sendStatus(403)

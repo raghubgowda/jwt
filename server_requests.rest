@@ -1,0 +1,14 @@
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{
+    "username" : "Raghu",
+    "password" : "Test123"
+}
+
+###
+GET http://localhost:3000/users
+
+###
+GET http://localhost:3000/movies
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1ODY3MTg2MDQsImV4cCI6MTU4NjcxODYzNH0.fVZ8KmFj8jDPqMWrIz0tXvgX06p53bD58wmIMofW-_k
