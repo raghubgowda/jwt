@@ -4,7 +4,10 @@ const app = express();
 const log = console.log;
 require('dotenv').config();
 const bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
+const UserSchema = require('./models/User');
 
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 let users = [];
@@ -37,14 +40,24 @@ app.get('/users', (req, res) => {
     res.json(users);
 });
 
-app.post('/register', (req, res) => {
+app.post('/register', async(req, res) => {
     const hashedPassword = bcrypt.hashSync(req.body.password, 10);
     const user = {
-        username: req.body.username,
+        name: req.body.username,
         password: hashedPassword
     };
-    users.push(user);
-    return res.sendStatus(204);
+
+    try {
+        const userSchema = new UserSchema(user);
+        const newUser = await userSchema.save();
+        log(newUser);
+        users.push(user);
+        return res.sendStatus(204);   
+    } catch (error) {
+        log(error.message);
+        res.status(500).send('Error while registering a new user');    
+    }
+
 });
 
 
@@ -61,6 +74,9 @@ function authenticate(req, res, next){
     })
 }
 
+mongoose.connect(process.env.MONGO_DB_CONNECTION_URL, {useNewUrlParser: true, useUnifiedTopology: true}, () => {
+    log('Connected to database!!!');
+});
 app.listen(3000);
 
-log('Server staretd!!!');
+log('Server started!!!');
