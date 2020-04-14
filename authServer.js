@@ -35,8 +35,6 @@ app.post('/login', async (req, res) => {
 
         if(user == null) return res.status(404).send('user not found');
 
-        log(`passed: ${req.body.password} hashed:${user.password}`);
-
         if(await bcrypt.compare(req.body.password, user.password)) {
             res.json(generateToken( { name : user.name } ));
         } else {
