@@ -29,7 +29,8 @@ app.post('/refreshToken', (req, res) => {
 
 app.post('/login', async (req, res) => {
     try {
-        const users = await UserSchema.find(); 
+        //Fetching users with a timeout of 500ms
+        const users = await Promise.race([ new Promise(res => setTimeout(res, 500, [])), UserSchema.find()]);
         const user = users.find(user => user.name === req.body.username)
 
         if(user == null) return res.status(404).send('user not found');
