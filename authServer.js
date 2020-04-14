@@ -2,6 +2,8 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const http = require('http');
 const bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
+const UserSchema = require('./models/User');
 const log = console.log;
 require('dotenv').config();
 
@@ -27,9 +29,8 @@ app.post('/refreshToken', (req, res) => {
 
 app.post('/login', async (req, res) => {
     try {
-        const users = await getUser(req.body.username);
-        const user = users.find(user => user.name === req.body.name)
-        log(user);
+        const users = await UserSchema.find(); 
+        const user = users.find(user => user.name === req.body.username)
 
         if(user == null) return res.status(404).send('user not found');
 
@@ -56,24 +57,6 @@ function removeRefreshToken(refreshToken){
     refreshTokens = refreshTokens.filter( token => token !== refreshToken);
 }
 
-function getUser(){
-    const url = 'http://localhost:3000/users';
-    return new Promise((resolve, reject) => {
-        http.get(url, res => {
-            let body = '';
-            res.on('data', chunk => {
-                body += chunk;
-            }),
-            res.on('end', () => {
-                resolve(JSON.parse(body));
-            }),
-            res.on('error', e => {
-                reject(e);
-            })
-        });
-    });
-}
-
 function generateToken(user){
     const access_token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn : '30s'});
     const refresh_token = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
@@ -81,6 +64,10 @@ function generateToken(user){
     return {access_token : access_token, refresh_token : refresh_token};
 }
 
-app.listen(4000);
+mongoose.connect(process.env.MONGO_DB_CONNECTION_URL, {useNewUrlParser: true, useUnifiedTopology: true}, () => {
+    log('Connected to database!!!');
+});
 
-log('Auth server started!!!');
+app.listen(process.env.AUTH_SERVER_PORT);
+
+log(`Auth server started on port ${process.env.AUTH_SERVER_PORT}`);

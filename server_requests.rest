@@ -2,13 +2,10 @@ POST http://localhost:3000/register
 Content-Type: application/json
 
 {
-    "username" : "Maaya",
-    "password" : "Test123"
+    "username" : "Pooja",
+    "password" : "56shjhja"
 }
 
 ###
-GET http://localhost:3000/users
-
-###
 GET http://localhost:3000/movies
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1ODY3MTg2MDQsImV4cCI6MTU4NjcxODYzNH0.fVZ8KmFj8jDPqMWrIz0tXvgX06p53bD58wmIMofW-_k
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiUmFnaHUiLCJpYXQiOjE1ODY4MjE1MjEsImV4cCI6MTU4NjgyMTU1MX0.GBFfnoi3x7EDuCBXFF2UI-4wBcYtqUBoFEJ4Fqoaztw

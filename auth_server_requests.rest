@@ -12,7 +12,7 @@ POST http://localhost:4000/refreshToken
 Content-Type: application/json
 
 {
-    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1ODY3MTg1Njh9.H4fcz5DwtMoNtcS_GUYVBO2BaYTFkMParUEmrDY6gtU"
+    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiUmFnaHUiLCJpYXQiOjE1ODY4MjE0NzZ9.C2Kc1zih8fTkPmCKtC2GmyNjkwaRYAibR3O3SaNmKFI"
 }
 
 ###
